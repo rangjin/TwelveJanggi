@@ -5,6 +5,7 @@ import com.rangjin.twelvejanggi.model.order.MoveOrder;
 import com.rangjin.twelvejanggi.model.order.SummonOrder;
 import com.rangjin.twelvejanggi.model.player.Player;
 import com.rangjin.twelvejanggi.service.GameService;
+import com.rangjin.twelvejanggi.service.TweleveJanggiService;
 import com.rangjin.twelvejanggi.service.dto.ConnectRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class GameApiController {
 
     private final GameService gameService;
+    private final TweleveJanggiService tweleveJanggiService;
 
     @PostMapping("/create")
     public ResponseEntity<?> createGame(@RequestBody Player player) {
@@ -35,13 +37,13 @@ public class GameApiController {
     @PostMapping("/move")
     public ResponseEntity<?> moveOrder(@RequestBody MoveOrder order) throws GameNotFoundException, NotYourTurnException, CouldNotMoveException {
         log.info("Move Piece : {}", order.getGameId() + ", " + order);
-        return new ResponseEntity<>(gameService.move(order), HttpStatus.OK);
+        return new ResponseEntity<>(tweleveJanggiService.move(order), HttpStatus.OK);
     }
 
     @PostMapping("/summon")
-    public ResponseEntity<?> summonOrder(@RequestBody SummonOrder order) throws GameNotFoundException, NotYourTurnException, CouldNotMoveException, CouldNotSummonException {
+    public ResponseEntity<?> summonOrder(@RequestBody SummonOrder order) throws GameNotFoundException, NotYourTurnException, CouldNotSummonException {
         log.info("Summon Piece : {}", order.getGameId() + ", " + order);
-        return new ResponseEntity<>(gameService.summon(order), HttpStatus.OK);
+        return new ResponseEntity<>(tweleveJanggiService.summon(order), HttpStatus.OK);
     }
 
 }
