@@ -2,6 +2,7 @@ package com.rangjin.twelvejanggi.controller;
 
 import com.rangjin.twelvejanggi.exception.*;
 import com.rangjin.twelvejanggi.model.order.MoveOrder;
+import com.rangjin.twelvejanggi.model.order.SummonOrder;
 import com.rangjin.twelvejanggi.model.player.Player;
 import com.rangjin.twelvejanggi.service.GameService;
 import com.rangjin.twelvejanggi.service.dto.ConnectRequest;
@@ -35,6 +36,12 @@ public class GameApiController {
     public ResponseEntity<?> moveOrder(@RequestBody MoveOrder order) throws GameNotFoundException, NotYourTurnException, CouldNotMoveException {
         log.info("Move Piece : {}", order.getGameId() + ", " + order);
         return new ResponseEntity<>(gameService.move(order), HttpStatus.OK);
+    }
+
+    @PostMapping("/summon")
+    public ResponseEntity<?> summonOrder(@RequestBody SummonOrder order) throws GameNotFoundException, NotYourTurnException, CouldNotMoveException, CouldNotSummonException {
+        log.info("Summon Piece : {}", order.getGameId() + ", " + order);
+        return new ResponseEntity<>(gameService.summon(order), HttpStatus.OK);
     }
 
 }

@@ -5,6 +5,7 @@ import com.rangjin.twelvejanggi.model.*;
 import com.rangjin.twelvejanggi.model.game.Game;
 import com.rangjin.twelvejanggi.model.game.GameStatus;
 import com.rangjin.twelvejanggi.model.order.MoveOrder;
+import com.rangjin.twelvejanggi.model.order.SummonOrder;
 import com.rangjin.twelvejanggi.model.piece.Piece;
 import com.rangjin.twelvejanggi.model.piece.PieceType;
 import com.rangjin.twelvejanggi.model.player.Player;
@@ -13,6 +14,8 @@ import com.rangjin.twelvejanggi.storage.GameStorage;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 @Service
 @Slf4j
@@ -57,6 +60,55 @@ public class GameService {
         return game;
     }
 
+    public Game summon(SummonOrder order) throws GameNotFoundException, NotYourTurnException, CouldNotSummonException {
+        String gameId = order.getGameId();
+        if (!GameStorage.getInstance().getGames().containsKey(gameId)) {
+            throw new GameNotFoundException();
+        }
+
+        Game game = GameStorage.getInstance().getGame(gameId);
+
+        PlayerType turn = game.getTurn();
+        PlayerType playerType = order.getPlayerType();
+
+        if (turn != playerType) {
+            throw new NotYourTurnException();
+        }
+
+        Pos cur = order.getCur();
+        if ((cur.x > 4 || cur.x < 0 || cur.y > 3 || cur.y < 0) ||
+                game.getBoard()[cur.x][cur.y].getPieceType() != PieceType.BLANK ||
+                (cur.x == 3 && turn == PlayerType.WHITE) || (cur.x == 0 && turn == PlayerType.BLACK)) {
+            throw new CouldNotSummonException();
+        }
+
+        ArrayList<Piece> list;
+        if (playerType == PlayerType.WHITE) {
+            list = game.getWhitePieces();
+        } else {
+            list = game.getBlackPieces();
+        }
+
+        PieceType type = order.getSummonPieceType();
+        boolean state = false;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getPieceType() == type) {
+                game.getBoard()[cur.x][cur.y] = list.get(i);
+                list.remove(i);
+                state = true;
+                break;
+            }
+        }
+
+        if (!state) {
+            throw new CouldNotSummonException();
+        }
+
+        endTurn(game);
+
+        return game;
+    }
+
     public Game move(MoveOrder order) throws GameNotFoundException, NotYourTurnException, CouldNotMoveException {
         String gameId = order.getGameId();
         if (!GameStorage.getInstance().getGames().containsKey(gameId)) {
@@ -71,6 +123,12 @@ public class GameService {
         Pos next = order.getNext();
         movePiece(game, pre, next);
 
+        endTurn(game);
+
+        return game;
+    }
+
+    public void endTurn(Game game) {
         game.setWinner(checkGame(game));
         if (game.getWinner() != PlayerType.NONE) {
             log.info("Game Finished : {}", game.getGameId() + ", " + game.getWinner());
@@ -79,8 +137,6 @@ public class GameService {
         } else {
             GameStorage.getInstance().setGame(game);
         }
-
-        return game;
     }
 
     public void checkHighlighted(Game game, Pos cur) throws NotYourTurnException, CouldNotMoveException {
@@ -117,6 +173,7 @@ public class GameService {
 
         if (next.x < 0 || next.x > 3 || next.y < 0 || next.y > 3 || !board[next.x][next.y].isHighlighted()) {
             // 이동하고자 하는 장소가 보드 바깥이거나 해당 말이 이동할 수 없는 공간일 경우
+            highlightOff(game.getBoard());
             throw new CouldNotMoveException();
         }
 
