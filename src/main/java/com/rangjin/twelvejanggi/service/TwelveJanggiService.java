@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 @Service
 @Slf4j
-public class TweleveJanggiService {
+public class TwelveJanggiService {
 
     static final int[][][] DIR = {
             {},
