@@ -1,5 +1,6 @@
-package com.rangjin.twelvejanggi.model;
+package com.rangjin.twelvejanggi.model.piece;
 
+import com.rangjin.twelvejanggi.model.player.PlayerType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,5 +13,7 @@ public class Piece {
     private PlayerType playerType;
 
     private PieceType pieceType;
+
+    private boolean highlighted;
 
 }

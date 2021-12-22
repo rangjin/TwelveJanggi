@@ -1,4 +1,4 @@
-package com.rangjin.twelvejanggi.model;
+package com.rangjin.twelvejanggi.model.piece;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

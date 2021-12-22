@@ -1,8 +1,8 @@
 package com.rangjin.twelvejanggi.controller;
 
-import com.rangjin.twelvejanggi.exception.GameAlreadyStartedException;
-import com.rangjin.twelvejanggi.exception.GameNotFoundException;
-import com.rangjin.twelvejanggi.model.Player;
+import com.rangjin.twelvejanggi.exception.*;
+import com.rangjin.twelvejanggi.model.order.MoveOrder;
+import com.rangjin.twelvejanggi.model.player.Player;
 import com.rangjin.twelvejanggi.service.GameService;
 import com.rangjin.twelvejanggi.service.dto.ConnectRequest;
 import lombok.AllArgsConstructor;
@@ -29,6 +29,12 @@ public class GameApiController {
     public ResponseEntity<?> connectGame(@RequestBody ConnectRequest connectRequest) throws GameNotFoundException, GameAlreadyStartedException {
         log.info("Connect Game : {}", connectRequest);
         return new ResponseEntity<>(gameService.connect(connectRequest.getPlayer(), connectRequest.getGameId()), HttpStatus.OK);
+    }
+
+    @PostMapping("/move")
+    public ResponseEntity<?> moveOrder(@RequestBody MoveOrder order) throws GameNotFoundException, NotYourTurnException, CouldNotMoveException {
+        log.info("Move Piece : {}", order.getGameId() + ", " + order);
+        return new ResponseEntity<>(gameService.move(order), HttpStatus.OK);
     }
 
 }
