@@ -8,9 +8,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ConnectRequest {
+public class ConnectRequestDto<T> {
 
-    private Player player;
     private String gameId;
+    private Player player;
 
 }

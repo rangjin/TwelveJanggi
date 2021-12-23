@@ -44,18 +44,18 @@ public class Game {
 
     public void initBoard() {
         this.board = new Piece[4][3];
-        this.board[0][0] = new Piece(PlayerType.WHITE, PieceType.JANG, false);
-        this.board[0][1] = new Piece(PlayerType.WHITE, PieceType.WANG, false);
-        this.board[0][2] = new Piece(PlayerType.WHITE, PieceType.SANG, false);
-        this.board[1][0] = new Piece(PlayerType.NONE, PieceType.BLANK, false);
-        this.board[1][1] = new Piece(PlayerType.WHITE, PieceType.JA, false);
-        this.board[1][2] = new Piece(PlayerType.NONE, PieceType.BLANK, false);
-        this.board[2][0] = new Piece(PlayerType.NONE, PieceType.BLANK, false);
-        this.board[2][1] = new Piece(PlayerType.BLACK, PieceType.JA, false);
-        this.board[2][2] = new Piece(PlayerType.NONE, PieceType.BLANK, false);
-        this.board[3][0] = new Piece(PlayerType.BLACK, PieceType.SANG, false);
-        this.board[3][1] = new Piece(PlayerType.BLACK, PieceType.WANG, false);
-        this.board[3][2] = new Piece(PlayerType.BLACK, PieceType.JANG, false);
+        this.board[0][0] = new Piece(PlayerType.WHITE, PieceType.JANG);
+        this.board[0][1] = new Piece(PlayerType.WHITE, PieceType.WANG);
+        this.board[0][2] = new Piece(PlayerType.WHITE, PieceType.SANG);
+        this.board[1][0] = new Piece(PlayerType.NONE, PieceType.BLANK);
+        this.board[1][1] = new Piece(PlayerType.WHITE, PieceType.JA);
+        this.board[1][2] = new Piece(PlayerType.NONE, PieceType.BLANK);
+        this.board[2][0] = new Piece(PlayerType.NONE, PieceType.BLANK);
+        this.board[2][1] = new Piece(PlayerType.BLACK, PieceType.JA);
+        this.board[2][2] = new Piece(PlayerType.NONE, PieceType.BLANK);
+        this.board[3][0] = new Piece(PlayerType.BLACK, PieceType.SANG);
+        this.board[3][1] = new Piece(PlayerType.BLACK, PieceType.WANG);
+        this.board[3][2] = new Piece(PlayerType.BLACK, PieceType.JANG);
     }
 
 }

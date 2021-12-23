@@ -1,12 +1,13 @@
 package com.rangjin.twelvejanggi.controller;
 
 import com.rangjin.twelvejanggi.exception.*;
-import com.rangjin.twelvejanggi.model.order.MoveOrder;
-import com.rangjin.twelvejanggi.model.order.SummonOrder;
+import com.rangjin.twelvejanggi.model.Pos;
+import com.rangjin.twelvejanggi.model.piece.PieceType;
 import com.rangjin.twelvejanggi.model.player.Player;
 import com.rangjin.twelvejanggi.service.GameService;
 import com.rangjin.twelvejanggi.service.TwelveJanggiService;
-import com.rangjin.twelvejanggi.service.dto.ConnectRequest;
+import com.rangjin.twelvejanggi.service.dto.ConnectRequestDto;
+import com.rangjin.twelvejanggi.service.dto.OrderRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -29,11 +30,22 @@ public class GameApiController {
     }
 
     @PostMapping("/connect")
-    public ResponseEntity<?> connectGame(@RequestBody ConnectRequest connectRequest) throws GameNotFoundException, GameAlreadyStartedException {
-        log.info("Connect Game : {}", connectRequest);
-        return new ResponseEntity<>(gameService.connect(connectRequest.getPlayer(), connectRequest.getGameId()), HttpStatus.OK);
+    public ResponseEntity<?> connectGame(@RequestBody ConnectRequestDto<Player> dto) throws GameNotFoundException, GameAlreadyStartedException {
+        log.info("Connect Game : {}", dto);
+        return new ResponseEntity<>(gameService.connect(dto.getPlayer(), dto.getGameId()), HttpStatus.OK);
     }
 
+    @PostMapping("/selectInBoard")
+    public ResponseEntity<?> selectInBoard(@RequestBody OrderRequestDto<Pos> dto) throws NotYourTurnException, NotYourPieceException, CouldNotMoveException, CouldNotSummonException {
+        return new ResponseEntity<>(twelveJanggiService.select(dto.getGameId(), dto.getPlayerType(), dto.getData()), HttpStatus.OK);
+    }
+
+    @PostMapping("/selectInBag")
+    public ResponseEntity<?> selectInBag(@RequestBody OrderRequestDto<PieceType> dto) throws NotYourTurnException, CouldNotSummonException, DoNotHavePieceException {
+        return new ResponseEntity<>(twelveJanggiService.select(dto.getGameId(), dto.getPlayerType(), dto.getData()), HttpStatus.OK);
+    }
+
+    /*
     @PostMapping("/move")
     public ResponseEntity<?> moveOrder(@RequestBody MoveOrder order) throws GameNotFoundException, NotYourTurnException, CouldNotMoveException {
         log.info("Move Piece : {}", order.getGameId() + ", " + order);
@@ -45,5 +57,7 @@ public class GameApiController {
         log.info("Summon Piece : {}", order.getGameId() + ", " + order);
         return new ResponseEntity<>(twelveJanggiService.summon(order), HttpStatus.OK);
     }
+
+     */
 
 }
