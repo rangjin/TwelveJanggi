@@ -1,4 +1,4 @@
-package com.rangjin.twelvejanggi.model.player;
+package com.rangjin.twelvejanggi.game.model.player;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

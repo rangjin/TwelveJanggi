@@ -1,16 +1,19 @@
-package com.rangjin.twelvejanggi.service.dto;
+package com.rangjin.twelvejanggi.controller.dto;
 
-import com.rangjin.twelvejanggi.model.player.PlayerType;
+import com.rangjin.twelvejanggi.game.model.player.PlayerType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 public class OrderResponseDto<T> {
 
     private PlayerType playerType;
+
     private T data;
 
 }

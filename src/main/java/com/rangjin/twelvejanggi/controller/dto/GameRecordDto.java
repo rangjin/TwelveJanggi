@@ -1,18 +1,18 @@
-package com.rangjin.twelvejanggi.service.dto;
+package com.rangjin.twelvejanggi.controller.dto;
 
 import com.rangjin.twelvejanggi.domain.GameRecord;
-import com.rangjin.twelvejanggi.model.player.PlayerType;
+import com.rangjin.twelvejanggi.game.model.player.PlayerType;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
 @Setter
+@ToString
 public class GameRecordDto {
-
-    private Long id;
 
     private String gameId;
 
@@ -25,7 +25,6 @@ public class GameRecordDto {
     private List<OrderRecordDto> orderList;
 
     public GameRecordDto(GameRecord gameRecord) {
-        this.id = gameRecord.getId();
         this.gameId = gameRecord.getGameId();
         this.white = gameRecord.getWhite();
         this.black = gameRecord.getBlack();

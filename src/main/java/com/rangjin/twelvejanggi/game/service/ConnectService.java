@@ -1,10 +1,11 @@
-package com.rangjin.twelvejanggi.service;
+package com.rangjin.twelvejanggi.game.service;
 
-import com.rangjin.twelvejanggi.exception.*;
-import com.rangjin.twelvejanggi.model.game.Game;
-import com.rangjin.twelvejanggi.model.game.GameStatus;
-import com.rangjin.twelvejanggi.model.player.Player;
-import com.rangjin.twelvejanggi.storage.GameStorage;
+import com.rangjin.twelvejanggi.game.exception.GameAlreadyStartedException;
+import com.rangjin.twelvejanggi.game.exception.GameNotFoundException;
+import com.rangjin.twelvejanggi.game.model.game.Game;
+import com.rangjin.twelvejanggi.game.model.game.GameStatus;
+import com.rangjin.twelvejanggi.game.model.player.Player;
+import com.rangjin.twelvejanggi.game.storage.GameStorage;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

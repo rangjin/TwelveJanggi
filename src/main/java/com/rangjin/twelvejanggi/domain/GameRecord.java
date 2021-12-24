@@ -1,7 +1,7 @@
 package com.rangjin.twelvejanggi.domain;
 
-import com.rangjin.twelvejanggi.model.game.Game;
-import com.rangjin.twelvejanggi.model.player.PlayerType;
+import com.rangjin.twelvejanggi.game.model.game.Game;
+import com.rangjin.twelvejanggi.game.model.player.PlayerType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 public class GameRecord {
 
     @Id

@@ -1,15 +1,16 @@
-package com.rangjin.twelvejanggi.service;
+package com.rangjin.twelvejanggi.game.service;
 
-import com.rangjin.twelvejanggi.exception.*;
-import com.rangjin.twelvejanggi.model.Order;
-import com.rangjin.twelvejanggi.model.Pos;
-import com.rangjin.twelvejanggi.model.game.Game;
-import com.rangjin.twelvejanggi.model.game.GameStatus;
-import com.rangjin.twelvejanggi.model.piece.Piece;
-import com.rangjin.twelvejanggi.model.piece.PieceType;
-import com.rangjin.twelvejanggi.model.player.PlayerType;
-import com.rangjin.twelvejanggi.service.dto.OrderResponseDto;
-import com.rangjin.twelvejanggi.storage.GameStorage;
+import com.rangjin.twelvejanggi.game.exception.*;
+import com.rangjin.twelvejanggi.game.model.Order;
+import com.rangjin.twelvejanggi.game.model.Pos;
+import com.rangjin.twelvejanggi.game.model.game.Game;
+import com.rangjin.twelvejanggi.game.model.game.GameStatus;
+import com.rangjin.twelvejanggi.game.model.piece.Piece;
+import com.rangjin.twelvejanggi.game.model.piece.PieceType;
+import com.rangjin.twelvejanggi.game.model.player.PlayerType;
+import com.rangjin.twelvejanggi.service.GameRecordService;
+import com.rangjin.twelvejanggi.controller.dto.OrderResponseDto;
+import com.rangjin.twelvejanggi.game.storage.GameStorage;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -33,40 +34,41 @@ public class GameService {
             {{1, -1}, {1, 0}, {1, 1}, {0, -1}, {0, 1}, {-1, 0}}
     };
 
-    public OrderResponseDto<?> select(String gameId, PlayerType playerType, Pos cur)
-            throws NotYourTurnException, NotYourPieceException, CouldNotMoveException, CouldNotSummonException {
-        Game game = GameStorage.getInstance().getGame(gameId);
-        Piece[][] board = game.getBoard();
-
-        if (playerType != game.getTurn()) {
+    public void startTurn(Game game, PlayerType playerType) throws NotYourTurnException, GameNotFoundException {
+        if (game == null) {
+            // 게임이 존재하지 않을 경우
+            throw new GameNotFoundException();
+        } else if (playerType != game.getTurn()) {
             // 플레이어의 차례가 아닐 경우
             throw new NotYourTurnException();
         }
+    }
 
-        List<Piece> list;
+    public OrderResponseDto<?> select(String gameId, PlayerType playerType, Pos cur)
+            throws NotYourTurnException, NotYourPieceException, CouldNotMoveException, CouldNotSummonException, GameNotFoundException {
+        Game game = GameStorage.getInstance().getGame(gameId);
+        startTurn(game, playerType);
+
+        Piece[][] board = game.getBoard();
 
         // 보유중인 기물 리스트
-        if (playerType == PlayerType.WHITE) {
-            list = game.getWhitePieces();
-        } else {
-            list = game.getBlackPieces();
-        }
+        List<Piece> pieceList = (playerType == PlayerType.WHITE ? game.getWhitePieces() : game.getBlackPieces());
 
         // 보드에 포인트된 기물이 있는지 확인
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 3; j++) {
                 if (board[i][j].isPointed()) {
                     // 있을경우 이동
-                    return move(game, playerType, list, new Pos(i, j), cur);
+                    return move(game, playerType, pieceList, new Pos(i, j), cur);
                 }
             }
         }
 
         // 보유 중인 포인트된 기물이 있는지 확인
-        for (Piece piece : list) {
+        for (Piece piece : pieceList) {
             if (piece.isPointed()) {
                 // 있을 경우 소환
-                return summon(game, playerType, list, piece, cur);
+                return summon(game, playerType, pieceList, piece, cur);
             }
         }
 
@@ -81,30 +83,16 @@ public class GameService {
     }
 
     public OrderResponseDto<?> select(String gameId, PlayerType playerType, PieceType pieceType)
-            throws NotYourTurnException, CouldNotSummonException, DoNotHavePieceException {
+            throws NotYourTurnException, CouldNotSummonException, DoNotHavePieceException, GameNotFoundException {
         Game game = GameStorage.getInstance().getGame(gameId);
+        startTurn(game, playerType);
+
         Piece[][] board = game.getBoard();
-
-        if (playerType != game.getTurn()) {
-            // 플레이어의 차례가 아닐 경우
-            throw new NotYourTurnException();
-        }
-
-        List<Piece> pieceList;
         List<Pos> highlightedList = new ArrayList<>();
 
-        int s, e;
-
         // 해당 플레이어의 보유중인 기물 리스트 & 플레이어 타입에 따른 범위 지정
-        if (playerType == PlayerType.WHITE) {
-            pieceList = game.getWhitePieces();
-            s = 0;
-            e = 2;
-        } else {
-            pieceList = game.getBlackPieces();
-            s = 1;
-            e = 3;
-        }
+        List<Piece> pieceList = (playerType == PlayerType.WHITE ? game.getWhitePieces() : game.getBlackPieces());
+        int s = playerType.getValue() - 1, e = playerType.getValue() + 1;
 
         boolean state = false;
 
@@ -195,9 +183,9 @@ public class GameService {
             board[pre.x][pre.y] = new Piece(PlayerType.NONE, PieceType.BLANK);
 
             // 명령 저장
-            game.getOrderDtoList().add(
-                    new Order(playerType, board[next.x][next.y].getPieceType(),
-                            new Pos(pre.x, pre.y), new Pos(next.x, next.y)));
+            Order order = new Order(playerType, board[next.x][next.y].getPieceType(), new Pos(pre.x, pre.y), new Pos(next.x, next.y));
+            log.info("Move : {}", order);
+            game.getOrderDtoList().add(order);
 
             // JA가 상대편 진영 맨 끝에 도달했을 경우 HU로 승격
             if ((next.x == 0 || next.x == 3) && board[next.x][next.y].getPieceType() == PieceType.JA) {
@@ -233,8 +221,9 @@ public class GameService {
             list.remove(piece);
 
             // 명령 저장
-            game.getOrderDtoList().add(
-                    new Order(playerType, piece.getPieceType(), new Pos(-1, -1), new Pos(cur.x, cur.y)));
+            Order order = new Order(playerType, piece.getPieceType(), new Pos(-1, -1), new Pos(cur.x, cur.y));
+            log.info("Summon : {}", order);
+            game.getOrderDtoList().add(order);
 
             // 포인트 초기화, 턴 넘김, 게임 종료 여부 확인, 변경된 게임 정보 저장 후 반환
             resetBoardPoint(board);
@@ -249,6 +238,7 @@ public class GameService {
 
         if (game.getWinner() != PlayerType.NONE) {
             // 게임이 종료되었을 시 게임 상태 변경 후 db에 저장, 인스턴스에서 삭제
+            log.info("Game Finished : {}", game.getWinner());
             game.setGameStatus(GameStatus.FINISHED);
             gameRecordService.saveGame(game);
             GameStorage.getInstance().removeGame(game.getGameId());

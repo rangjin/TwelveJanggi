@@ -1,5 +1,8 @@
-package com.rangjin.twelvejanggi.exception;
+package com.rangjin.twelvejanggi.game.exception;
 
+import lombok.Getter;
+
+@Getter
 public class GameAlreadyStartedException extends Exception {
 
     private final String message;

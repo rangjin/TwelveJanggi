@@ -1,6 +1,6 @@
-package com.rangjin.twelvejanggi.storage;
+package com.rangjin.twelvejanggi.game.storage;
 
-import com.rangjin.twelvejanggi.model.game.Game;
+import com.rangjin.twelvejanggi.game.model.game.Game;
 
 import java.util.HashMap;
 import java.util.Map;

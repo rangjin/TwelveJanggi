@@ -1,13 +1,15 @@
-package com.rangjin.twelvejanggi.model;
+package com.rangjin.twelvejanggi.game.model;
 
-import com.rangjin.twelvejanggi.model.piece.PieceType;
-import com.rangjin.twelvejanggi.model.player.PlayerType;
+import com.rangjin.twelvejanggi.game.model.piece.PieceType;
+import com.rangjin.twelvejanggi.game.model.player.PlayerType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 public class Order {
 

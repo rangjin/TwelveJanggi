@@ -1,8 +1,8 @@
 package com.rangjin.twelvejanggi.domain;
 
-import com.rangjin.twelvejanggi.model.Order;
-import com.rangjin.twelvejanggi.model.piece.PieceType;
-import com.rangjin.twelvejanggi.model.player.PlayerType;
+import com.rangjin.twelvejanggi.game.model.Order;
+import com.rangjin.twelvejanggi.game.model.piece.PieceType;
+import com.rangjin.twelvejanggi.game.model.player.PlayerType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -10,9 +10,9 @@ import lombok.experimental.Accessors;
 import javax.persistence.*;
 
 @Entity
+@Getter
 @Accessors(chain = true)
 @NoArgsConstructor
-@Getter
 public class OrderRecord {
 
     @Id

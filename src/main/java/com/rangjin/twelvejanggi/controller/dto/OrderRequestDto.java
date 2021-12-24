@@ -1,6 +1,6 @@
-package com.rangjin.twelvejanggi.service.dto;
+package com.rangjin.twelvejanggi.controller.dto;
 
-import com.rangjin.twelvejanggi.model.player.PlayerType;
+import com.rangjin.twelvejanggi.game.model.player.PlayerType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,7 +11,9 @@ import lombok.ToString;
 public class OrderRequestDto<T> {
 
     private String gameId;
+
     private PlayerType playerType;
+
     private T data;
 
 }

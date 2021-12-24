@@ -1,10 +1,10 @@
-package com.rangjin.twelvejanggi.model.game;
+package com.rangjin.twelvejanggi.game.model.game;
 
-import com.rangjin.twelvejanggi.model.Order;
-import com.rangjin.twelvejanggi.model.piece.Piece;
-import com.rangjin.twelvejanggi.model.piece.PieceType;
-import com.rangjin.twelvejanggi.model.player.Player;
-import com.rangjin.twelvejanggi.model.player.PlayerType;
+import com.rangjin.twelvejanggi.game.model.Order;
+import com.rangjin.twelvejanggi.game.model.piece.Piece;
+import com.rangjin.twelvejanggi.game.model.piece.PieceType;
+import com.rangjin.twelvejanggi.game.model.player.Player;
+import com.rangjin.twelvejanggi.game.model.player.PlayerType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,15 +18,25 @@ import java.util.List;
 public class Game {
 
     private String gameId;
+
     private GameStatus gameStatus;
+
     private Player white;
+
     private Player black;
+
     private PlayerType turn;
+
     private PlayerType state;
+
     private PlayerType winner;
+
     private Piece[][] board;
+
     private List<Piece> whitePieces;
+
     private List<Piece> blackPieces;
+
     private List<Order> orderDtoList;
 
     public Game(Player player) {

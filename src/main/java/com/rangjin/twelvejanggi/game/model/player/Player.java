@@ -1,11 +1,12 @@
-package com.rangjin.twelvejanggi.model.player;
+package com.rangjin.twelvejanggi.game.model.player;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class Player {
 
     private String name;

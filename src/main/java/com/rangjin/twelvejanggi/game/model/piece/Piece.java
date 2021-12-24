@@ -1,11 +1,13 @@
-package com.rangjin.twelvejanggi.model.piece;
+package com.rangjin.twelvejanggi.game.model.piece;
 
-import com.rangjin.twelvejanggi.model.player.PlayerType;
+import com.rangjin.twelvejanggi.game.model.player.PlayerType;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class Piece {
 
     private PlayerType playerType;
