@@ -9,7 +9,7 @@ import com.rangjin.twelvejanggi.game.model.piece.Piece;
 import com.rangjin.twelvejanggi.game.model.piece.PieceType;
 import com.rangjin.twelvejanggi.game.model.player.PlayerType;
 import com.rangjin.twelvejanggi.service.GameRecordService;
-import com.rangjin.twelvejanggi.controller.dto.OrderResponseDto;
+import com.rangjin.twelvejanggi.controller.dto.response.OrderResponseDto;
 import com.rangjin.twelvejanggi.game.storage.GameStorage;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

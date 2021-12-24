@@ -1,4 +1,4 @@
-package com.rangjin.twelvejanggi.controller.dto;
+package com.rangjin.twelvejanggi.controller.dto.request;
 
 import com.rangjin.twelvejanggi.game.model.player.Player;
 import lombok.Getter;
