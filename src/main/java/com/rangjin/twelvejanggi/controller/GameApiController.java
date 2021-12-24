@@ -4,8 +4,9 @@ import com.rangjin.twelvejanggi.exception.*;
 import com.rangjin.twelvejanggi.model.Pos;
 import com.rangjin.twelvejanggi.model.piece.PieceType;
 import com.rangjin.twelvejanggi.model.player.Player;
+import com.rangjin.twelvejanggi.service.GameRecordService;
+import com.rangjin.twelvejanggi.service.ConnectService;
 import com.rangjin.twelvejanggi.service.GameService;
-import com.rangjin.twelvejanggi.service.TwelveJanggiService;
 import com.rangjin.twelvejanggi.service.dto.ConnectRequestDto;
 import com.rangjin.twelvejanggi.service.dto.OrderRequestDto;
 import lombok.AllArgsConstructor;
@@ -20,8 +21,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/game")
 public class GameApiController {
 
-    private final GameService gameService;
-    private final TwelveJanggiService twelveJanggiService;
+    private final ConnectService gameService;
+    private final GameService twelveJanggiService;
+    private final GameRecordService gameRecordService;
 
     @PostMapping("/create")
     public ResponseEntity<?> createGame(@RequestBody Player player) {
@@ -45,19 +47,9 @@ public class GameApiController {
         return new ResponseEntity<>(twelveJanggiService.select(dto.getGameId(), dto.getPlayerType(), dto.getData()), HttpStatus.OK);
     }
 
-    /*
-    @PostMapping("/move")
-    public ResponseEntity<?> moveOrder(@RequestBody MoveOrder order) throws GameNotFoundException, NotYourTurnException, CouldNotMoveException {
-        log.info("Move Piece : {}", order.getGameId() + ", " + order);
-        return new ResponseEntity<>(twelveJanggiService.move(order), HttpStatus.OK);
+    @GetMapping("/getGameData/{gameId}")
+    public ResponseEntity<?> getGameData(@PathVariable("gameId") String gameId) {
+        return new ResponseEntity<>(gameRecordService.findByGameId(gameId), HttpStatus.OK);
     }
-
-    @PostMapping("/summon")
-    public ResponseEntity<?> summonOrder(@RequestBody SummonOrder order) throws GameNotFoundException, NotYourTurnException, CouldNotSummonException {
-        log.info("Summon Piece : {}", order.getGameId() + ", " + order);
-        return new ResponseEntity<>(twelveJanggiService.summon(order), HttpStatus.OK);
-    }
-
-     */
 
 }

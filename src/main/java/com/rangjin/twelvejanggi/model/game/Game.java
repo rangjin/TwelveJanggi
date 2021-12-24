@@ -1,15 +1,16 @@
 package com.rangjin.twelvejanggi.model.game;
 
+import com.rangjin.twelvejanggi.model.Order;
 import com.rangjin.twelvejanggi.model.piece.Piece;
 import com.rangjin.twelvejanggi.model.piece.PieceType;
 import com.rangjin.twelvejanggi.model.player.Player;
 import com.rangjin.twelvejanggi.model.player.PlayerType;
-import com.rangjin.twelvejanggi.model.order.Order;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,9 +25,9 @@ public class Game {
     private PlayerType state;
     private PlayerType winner;
     private Piece[][] board;
-    private ArrayList<Piece> whitePieces;
-    private ArrayList<Piece> blackPieces;
-    private ArrayList<Order> orderList;
+    private List<Piece> whitePieces;
+    private List<Piece> blackPieces;
+    private List<Order> orderDtoList;
 
     public Game(Player player) {
 //        this.gameId = UUID.randomUUID().toString();
@@ -39,7 +40,7 @@ public class Game {
         initBoard();
         this.whitePieces = new ArrayList<>();
         this.blackPieces = new ArrayList<>();
-        this.orderList = new ArrayList<>();
+        this.orderDtoList = new ArrayList<>();
     }
 
     public void initBoard() {
