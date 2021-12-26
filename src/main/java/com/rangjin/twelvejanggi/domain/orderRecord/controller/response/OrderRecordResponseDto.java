@@ -1,4 +1,4 @@
-package com.rangjin.twelvejanggi.global.dto;
+package com.rangjin.twelvejanggi.domain.orderRecord.controller.response;
 
 import com.rangjin.twelvejanggi.domain.orderRecord.entity.OrderRecord;
 import com.rangjin.twelvejanggi.domain.game.model.piece.PieceType;
@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class OrderRecordDto {
+public class OrderRecordResponseDto {
 
     private PlayerType playerType;
 
@@ -24,7 +24,7 @@ public class OrderRecordDto {
 
     private int nextY;
 
-    public OrderRecordDto(OrderRecord orderRecord) {
+    public OrderRecordResponseDto(OrderRecord orderRecord) {
         this.playerType = orderRecord.getPlayerType();
         this.pieceType = orderRecord.getPieceType();
         this.preX = orderRecord.getPreX();

@@ -8,7 +8,7 @@ import com.rangjin.twelvejanggi.domain.game.service.GameService;
 import com.rangjin.twelvejanggi.domain.game.controller.request.ConnectRequestDto;
 import com.rangjin.twelvejanggi.domain.game.controller.request.OrderRequestDto;
 import com.rangjin.twelvejanggi.global.exception.*;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/game")
 public class GameApiController {
 

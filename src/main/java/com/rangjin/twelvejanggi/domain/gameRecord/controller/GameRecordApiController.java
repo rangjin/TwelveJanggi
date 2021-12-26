@@ -1,7 +1,7 @@
 package com.rangjin.twelvejanggi.domain.gameRecord.controller;
 
 import com.rangjin.twelvejanggi.domain.gameRecord.service.GameRecordService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/gameRecord")
 public class GameRecordApiController {
 
-    private GameRecordService gameRecordService;
+    private final GameRecordService gameRecordService;
 
     @GetMapping("/{gameId}")
     public ResponseEntity<?> getGameData(@PathVariable("gameId") String gameId) {

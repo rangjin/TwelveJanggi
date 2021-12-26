@@ -11,7 +11,7 @@ import com.rangjin.twelvejanggi.domain.game.model.player.PlayerType;
 import com.rangjin.twelvejanggi.domain.gameRecord.service.GameRecordService;
 import com.rangjin.twelvejanggi.domain.game.repository.GameRepository;
 import com.rangjin.twelvejanggi.global.exception.*;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,7 @@ import java.util.List;
 
 @Service
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class GameService {
 
     private final GameRecordService gameRecordService;
