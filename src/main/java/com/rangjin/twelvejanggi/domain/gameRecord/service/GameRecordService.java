@@ -7,6 +7,7 @@ import com.rangjin.twelvejanggi.domain.player.entity.PlayerEntity;
 import com.rangjin.twelvejanggi.domain.player.repository.PlayerEntityRepository;
 import com.rangjin.twelvejanggi.domain.gameRecord.controller.response.GameRecordResponseDto;
 import com.rangjin.twelvejanggi.domain.orderRecord.service.OrderRecordService;
+import com.rangjin.twelvejanggi.global.exception.PlayerNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,8 @@ public class GameRecordService {
     public void saveGame(Game game) {
         // 종료된 게임 저장
         log.info("Save Game Data : {}", game);
-        PlayerEntity white = playerEntityRepository.findByUsername(game.getWhite().getName());
-        PlayerEntity black = playerEntityRepository.findByUsername(game.getBlack().getName());
+        PlayerEntity white = playerEntityRepository.findByUsername(game.getWhite().getName()).orElseThrow(PlayerNotFoundException::new);
+        PlayerEntity black = playerEntityRepository.findByUsername(game.getBlack().getName()).orElseThrow(PlayerNotFoundException::new);
         GameRecord gameRecord = new GameRecord(game, white, black);
         gameRecordRepository.save(gameRecord);
 
