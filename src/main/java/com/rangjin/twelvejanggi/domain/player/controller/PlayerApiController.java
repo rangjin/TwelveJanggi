@@ -47,7 +47,7 @@ public class PlayerApiController {
         PlayerResponseDto responseDto = playerService.findByUsername(dto.getUsername());
 
         return new ResponseEntity<>(new FormResponse<>(true,
-                jwtTokenProvider.createToken(responseDto.getUsername(), "Player")), HttpStatus.OK);
+                jwtTokenProvider.createToken(responseDto.getUsername())), HttpStatus.OK);
     }
 
 }

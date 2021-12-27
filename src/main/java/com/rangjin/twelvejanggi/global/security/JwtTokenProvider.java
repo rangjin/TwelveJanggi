@@ -2,6 +2,7 @@ package com.rangjin.twelvejanggi.global.security;
 
 import com.rangjin.twelvejanggi.domain.player.service.PlayerService;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
@@ -11,9 +12,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Collections;
-import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
@@ -28,15 +29,12 @@ public class JwtTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createToken(String username, String role) {
+    public String createToken(String username) {
         Claims claims = Jwts.claims().setSubject(username);
-        claims.put("role", Collections.singletonList(role));
-        Date now = new Date();
 
         return Jwts.builder()
-                .setClaims(claims)
-                .setIssuedAt(now)
-                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .setClaims(claims) // 데이터
+                .signWith(SignatureAlgorithm.HS256, secretKey) // 암호화 알고리즘 & secret 값
                 .compact();
     }
 
@@ -47,6 +45,10 @@ public class JwtTokenProvider {
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = playerService.loadUserByUsername(this.getUsername(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+    }
+
+    public String resolveToken(HttpServletRequest req) {
+        return req.getHeader("AUTH-TOKEN");
     }
 
 }
