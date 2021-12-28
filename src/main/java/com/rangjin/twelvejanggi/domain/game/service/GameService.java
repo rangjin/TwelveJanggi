@@ -10,9 +10,11 @@ import com.rangjin.twelvejanggi.domain.game.model.player.Player;
 import com.rangjin.twelvejanggi.domain.game.model.player.PlayerType;
 import com.rangjin.twelvejanggi.domain.gameRecord.service.GameRecordService;
 import com.rangjin.twelvejanggi.domain.game.repository.GameRepository;
+import com.rangjin.twelvejanggi.domain.player.entity.PlayerEntity;
 import com.rangjin.twelvejanggi.global.exception.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,14 +27,18 @@ public class GameService {
 
     private final GameRecordService gameRecordService;
 
-    public Game create(Player player) {
-        Game game = new Game(player);
+    public Game create() {
+        PlayerEntity player = (PlayerEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Game game = new Game(new Player(player.getUsername()));
         GameRepository.getInstance().setGame(game);
+
+        log.info("Start Game : {}", player.getUsername());
 
         return game;
     }
 
-    public Game connect(Player player, String gameId) throws GameNotFoundException, GameAlreadyStartedException {
+    public Game connect(String gameId) throws GameNotFoundException, GameAlreadyStartedException {
         Game game = GameRepository.getInstance().getGame(gameId);
 
         if (game == null) {
@@ -41,9 +47,13 @@ public class GameService {
             throw new GameAlreadyStartedException();
         }
 
-        game.setBlack(player);
+        PlayerEntity player = (PlayerEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        game.setBlack(new Player(player.getUsername()));
         game.setGameStatus(GameStatus.IN_PROGRESS);
         GameRepository.getInstance().setGame(game);
+
+        log.info("Connect Game : {}, {}", gameId, player.getUsername());
 
         return game;
     }

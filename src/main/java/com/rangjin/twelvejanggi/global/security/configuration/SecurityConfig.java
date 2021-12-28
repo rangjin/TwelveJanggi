@@ -1,5 +1,7 @@
-package com.rangjin.twelvejanggi.global.security;
+package com.rangjin.twelvejanggi.global.security.configuration;
 
+import com.rangjin.twelvejanggi.global.security.filter.JwtAuthenticationFilter;
+import com.rangjin.twelvejanggi.global.security.provider.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

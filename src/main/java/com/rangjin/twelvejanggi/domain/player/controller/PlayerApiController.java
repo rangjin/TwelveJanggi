@@ -5,7 +5,7 @@ import com.rangjin.twelvejanggi.domain.player.controller.response.PlayerResponse
 import com.rangjin.twelvejanggi.domain.player.service.PlayerService;
 import com.rangjin.twelvejanggi.domain.player.controller.request.RegisterRequestDto;
 import com.rangjin.twelvejanggi.global.dto.FormResponse;
-import com.rangjin.twelvejanggi.global.security.JwtTokenProvider;
+import com.rangjin.twelvejanggi.global.security.provider.JwtTokenProvider;
 import com.rangjin.twelvejanggi.global.validation.LoginPlayerValidator;
 import com.rangjin.twelvejanggi.global.validation.RegisterPlayerValidator;
 import lombok.RequiredArgsConstructor;

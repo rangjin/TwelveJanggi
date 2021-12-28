@@ -1,5 +1,6 @@
-package com.rangjin.twelvejanggi.global.security;
+package com.rangjin.twelvejanggi.global.security.filter;
 
+import com.rangjin.twelvejanggi.global.security.provider.JwtTokenProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

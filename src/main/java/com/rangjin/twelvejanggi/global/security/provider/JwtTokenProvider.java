@@ -1,4 +1,4 @@
-package com.rangjin.twelvejanggi.global.security;
+package com.rangjin.twelvejanggi.global.security.provider;
 
 import com.rangjin.twelvejanggi.domain.player.service.PlayerService;
 import io.jsonwebtoken.Claims;
