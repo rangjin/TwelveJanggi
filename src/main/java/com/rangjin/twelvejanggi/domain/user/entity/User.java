@@ -1,4 +1,4 @@
-package com.rangjin.twelvejanggi.domain.player.entity;
+package com.rangjin.twelvejanggi.domain.user.entity;
 
 import com.rangjin.twelvejanggi.domain.gameRecord.entity.GameRecord;
 import lombok.AllArgsConstructor;
@@ -22,7 +22,7 @@ import java.util.stream.Stream;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class PlayerEntity implements UserDetails {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +37,7 @@ public class PlayerEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Stream.of("ROLE_PLAYER").map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        return Stream.of("ROLE_USER").map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
     @Override

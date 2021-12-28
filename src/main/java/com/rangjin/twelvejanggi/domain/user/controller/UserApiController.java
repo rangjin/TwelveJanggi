@@ -1,9 +1,9 @@
-package com.rangjin.twelvejanggi.domain.player.controller;
+package com.rangjin.twelvejanggi.domain.user.controller;
 
-import com.rangjin.twelvejanggi.domain.player.controller.request.LoginRequestDto;
-import com.rangjin.twelvejanggi.domain.player.controller.response.PlayerEntityResponseDto;
-import com.rangjin.twelvejanggi.domain.player.service.PlayerEntityService;
-import com.rangjin.twelvejanggi.domain.player.controller.request.RegisterRequestDto;
+import com.rangjin.twelvejanggi.domain.user.controller.request.LoginRequestDto;
+import com.rangjin.twelvejanggi.domain.user.controller.response.UserResponseDto;
+import com.rangjin.twelvejanggi.domain.user.service.UserService;
+import com.rangjin.twelvejanggi.domain.user.controller.request.RegisterRequestDto;
 import com.rangjin.twelvejanggi.global.dto.FormResponse;
 import com.rangjin.twelvejanggi.global.security.provider.JwtTokenProvider;
 import com.rangjin.twelvejanggi.global.validation.LoginPlayerValidator;
@@ -20,31 +20,31 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/player")
-public class PlayerEntityApiController {
+public class UserApiController {
 
-    private final PlayerEntityService playerEntityService;
+    private final UserService userService;
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody RegisterRequestDto dto, Errors errors) {
-        new RegisterPlayerValidator(playerEntityService).validate(dto, errors);
+        new RegisterPlayerValidator(userService).validate(dto, errors);
 
         if (errors.hasErrors()) {
             return new ResponseEntity<>(new FormResponse<>(false, errors), HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(new FormResponse<>(true, playerEntityService.create(dto)), HttpStatus.OK);
+        return new ResponseEntity<>(new FormResponse<>(true, userService.create(dto)), HttpStatus.OK);
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDto dto, Errors errors) {
-        new LoginPlayerValidator(playerEntityService).validate(dto, errors);
+        new LoginPlayerValidator(userService).validate(dto, errors);
 
         if (errors.hasErrors()) {
             return new ResponseEntity<>(new FormResponse<>(false, errors), HttpStatus.OK);
         }
 
-        PlayerEntityResponseDto responseDto = playerEntityService.findByUsername(dto.getUsername());
+        UserResponseDto responseDto = userService.findByUsername(dto.getUsername());
 
         return new ResponseEntity<>(new FormResponse<>(true,
                 jwtTokenProvider.createToken(responseDto.getUsername())), HttpStatus.OK);

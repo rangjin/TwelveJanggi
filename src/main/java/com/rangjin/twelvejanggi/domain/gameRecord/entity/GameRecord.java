@@ -3,7 +3,7 @@ package com.rangjin.twelvejanggi.domain.gameRecord.entity;
 import com.rangjin.twelvejanggi.domain.orderRecord.entity.OrderRecord;
 import com.rangjin.twelvejanggi.domain.game.model.game.Game;
 import com.rangjin.twelvejanggi.domain.game.model.player.PlayerType;
-import com.rangjin.twelvejanggi.domain.player.entity.PlayerEntity;
+import com.rangjin.twelvejanggi.domain.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,17 +25,17 @@ public class GameRecord {
     private String gameId;
 
     @ManyToOne
-    private PlayerEntity white;
+    private User white;
 
     @ManyToOne
-    private PlayerEntity black;
+    private User black;
 
     private PlayerType winner;
 
     @OneToMany(mappedBy = "gameRecord")
     private List<OrderRecord> orderList;
 
-    public GameRecord(Game game, PlayerEntity white, PlayerEntity black) {
+    public GameRecord(Game game, User white, User black) {
         this.gameId = game.getGameId();
         this.white = white;
         this.black = black;

@@ -10,7 +10,7 @@ import com.rangjin.twelvejanggi.domain.game.model.player.Player;
 import com.rangjin.twelvejanggi.domain.game.model.player.PlayerType;
 import com.rangjin.twelvejanggi.domain.gameRecord.service.GameRecordService;
 import com.rangjin.twelvejanggi.domain.game.repository.GameRepository;
-import com.rangjin.twelvejanggi.domain.player.entity.PlayerEntity;
+import com.rangjin.twelvejanggi.domain.user.entity.User;
 import com.rangjin.twelvejanggi.global.exception.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,12 +28,12 @@ public class GameService {
     private final GameRecordService gameRecordService;
 
     public Game create() {
-        PlayerEntity player = (PlayerEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        Game game = new Game(new Player(player.getUsername()));
+        Game game = new Game(new Player(user.getUsername()));
         GameRepository.getInstance().setGame(game);
 
-        log.info("Start Game : {}", player.getUsername());
+        log.info("Start Game : {}", user.getUsername());
 
         return game;
     }
@@ -47,13 +47,13 @@ public class GameService {
             throw new GameAlreadyStartedException();
         }
 
-        PlayerEntity player = (PlayerEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        game.setBlack(new Player(player.getUsername()));
+        game.setBlack(new Player(user.getUsername()));
         game.setGameStatus(GameStatus.IN_PROGRESS);
         GameRepository.getInstance().setGame(game);
 
-        log.info("Connect Game : {}, {}", gameId, player.getUsername());
+        log.info("Connect Game : {}, {}", gameId, user.getUsername());
 
         return game;
     }

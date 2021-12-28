@@ -1,4 +1,4 @@
-package com.rangjin.twelvejanggi.domain.player.controller.request;
+package com.rangjin.twelvejanggi.domain.user.controller.request;
 
 import lombok.*;
 
