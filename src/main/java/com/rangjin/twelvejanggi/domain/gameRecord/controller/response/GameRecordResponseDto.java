@@ -30,7 +30,8 @@ public class GameRecordResponseDto {
         this.white = gameRecord.getWhite().getUsername();
         this.black = gameRecord.getBlack().getUsername();
         this.winner = gameRecord.getWinner();
-        this.orderList = gameRecord.getOrderList().stream().map(OrderRecordResponseDto::new).collect(Collectors.toList());
+        this.orderList = gameRecord.getOrderList().stream().map(OrderRecordResponseDto::new)
+                .collect(Collectors.toList());
     }
 
 }

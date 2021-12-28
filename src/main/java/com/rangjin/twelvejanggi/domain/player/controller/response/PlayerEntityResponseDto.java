@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @ToString
-public class PlayerResponseDto {
+public class PlayerEntityResponseDto {
 
     private String username;
 
@@ -20,10 +20,11 @@ public class PlayerResponseDto {
 
     private List<GameRecordResponseDto> gameRecordDtoList;
 
-    public PlayerResponseDto(PlayerEntity player) {
+    public PlayerEntityResponseDto(PlayerEntity player) {
         this.username = player.getUsername();
         this.password = player.getPassword();
-        this.gameRecordDtoList = player.getGameRecordList() == null ? null : player.getGameRecordList().stream().map(GameRecordResponseDto::new).collect(Collectors.toList());
+        this.gameRecordDtoList = player.getGameRecordList() == null ? null :
+                player.getGameRecordList().stream().map(GameRecordResponseDto::new).collect(Collectors.toList());
     }
 
 }

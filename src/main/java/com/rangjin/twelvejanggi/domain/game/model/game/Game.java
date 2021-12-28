@@ -11,6 +11,7 @@ import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -40,8 +41,7 @@ public class Game {
     private List<Order> orderDtoList;
 
     public Game(Player player) {
-//        this.gameId = UUID.randomUUID().toString();
-        this.gameId = "aaaa";
+        this.gameId = UUID.randomUUID().toString();
         this.gameStatus = GameStatus.NEW;
         this.white = player;
         this.black = null;

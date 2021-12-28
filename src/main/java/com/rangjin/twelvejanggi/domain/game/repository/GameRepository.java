@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class GameRepository {
 
-    private HashMap<String, Game> games;
+    private final HashMap<String, Game> games;
 
     private GameRepository() {
         games = new HashMap<>();

@@ -67,7 +67,8 @@ public class GameService {
             {{1, -1}, {1, 0}, {1, 1}, {0, -1}, {0, 1}, {-1, 0}}
     };
 
-    public List<Pos> highlight(String gameId, PlayerType playerType, Pos cur) throws NotYourTurnException, GameNotFoundException, CouldNotMoveException, NotYourPieceException {
+    public List<Pos> highlight(String gameId, PlayerType playerType, Pos cur)
+            throws NotYourTurnException, GameNotFoundException, CouldNotMoveException, NotYourPieceException {
         Game game = GameRepository.getInstance().getGame(gameId);
         checkError(game, playerType);
 
@@ -105,7 +106,8 @@ public class GameService {
         return highlightedList;
     }
 
-    public List<Pos> highlight(String gameId, PlayerType playerType, PieceType pieceType) throws DoNotHavePieceException, CouldNotSummonException, NotYourTurnException, GameNotFoundException {
+    public List<Pos> highlight(String gameId, PlayerType playerType, PieceType pieceType)
+            throws DoNotHavePieceException, CouldNotSummonException, NotYourTurnException, GameNotFoundException {
         Game game = GameRepository.getInstance().getGame(gameId);
         checkError(game, playerType);
 
@@ -155,7 +157,8 @@ public class GameService {
         return highlightedList;
     }
 
-    public Game move(String gameId, PlayerType playerType, Pos next) throws CouldNotMoveException, NoPointedPieceException, NotYourTurnException, GameNotFoundException {
+    public Game move(String gameId, PlayerType playerType, Pos next)
+            throws CouldNotMoveException, NoPointedPieceException, NotYourTurnException, GameNotFoundException {
         Game game = GameRepository.getInstance().getGame(gameId);
         checkError(game, playerType);
 
@@ -197,7 +200,8 @@ public class GameService {
             board[pre.x][pre.y] = new Piece(PlayerType.NONE, PieceType.BLANK);
 
             // 명령 저장
-            Order order = new Order(playerType, board[next.x][next.y].getPieceType(), new Pos(pre.x, pre.y), new Pos(next.x, next.y));
+            Order order = new Order(playerType, board[next.x][next.y].getPieceType(),
+                    new Pos(pre.x, pre.y), new Pos(next.x, next.y));
             log.info("Move : {}", order);
             game.getOrderDtoList().add(order);
 
@@ -214,7 +218,8 @@ public class GameService {
         }
     }
 
-    public Game summon(String gameId, PlayerType playerType, Pos cur) throws CouldNotSummonException, NoPointedPieceException, NotYourTurnException, GameNotFoundException {
+    public Game summon(String gameId, PlayerType playerType, Pos cur)
+            throws CouldNotSummonException, NoPointedPieceException, NotYourTurnException, GameNotFoundException {
         Game game = GameRepository.getInstance().getGame(gameId);
         checkError(game, playerType);
 

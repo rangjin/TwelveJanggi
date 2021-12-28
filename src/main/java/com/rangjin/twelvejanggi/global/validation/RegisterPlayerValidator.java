@@ -1,7 +1,7 @@
 package com.rangjin.twelvejanggi.global.validation;
 
 import com.rangjin.twelvejanggi.domain.player.controller.request.RegisterRequestDto;
-import com.rangjin.twelvejanggi.domain.player.service.PlayerService;
+import com.rangjin.twelvejanggi.domain.player.service.PlayerEntityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -9,7 +9,7 @@ import org.springframework.validation.Validator;
 @RequiredArgsConstructor
 public class RegisterPlayerValidator implements Validator {
 
-    private final PlayerService playerService;
+    private final PlayerEntityService playerEntityService;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -20,7 +20,7 @@ public class RegisterPlayerValidator implements Validator {
     public void validate(Object target, Errors errors) {
         RegisterRequestDto dto = (RegisterRequestDto) target;
 
-        if (playerService.existsByUsername(dto.getUsername())) {
+        if (playerEntityService.existsByUsername(dto.getUsername())) {
             errors.rejectValue("username", "overlap", "사용할 수 없는 아이디입니다");
         }
 

@@ -1,8 +1,7 @@
 package com.rangjin.twelvejanggi.global.security.provider;
 
-import com.rangjin.twelvejanggi.domain.player.service.PlayerService;
+import com.rangjin.twelvejanggi.domain.player.service.PlayerEntityService;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
@@ -14,13 +13,12 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
-import java.util.Collections;
 
 @Component
 @RequiredArgsConstructor
 public class JwtTokenProvider {
 
-    private final PlayerService playerService;
+    private final PlayerEntityService playerEntityService;
 
     private String secretKey = "abcdefg";
 
@@ -43,7 +41,7 @@ public class JwtTokenProvider {
     }
 
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = playerService.loadUserByUsername(this.getUsername(token));
+        UserDetails userDetails = playerEntityService.loadUserByUsername(this.getUsername(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
