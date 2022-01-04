@@ -2,7 +2,7 @@ package com.rangjin.twelvejanggi.domain.gameRecord.controller.response;
 
 import com.rangjin.twelvejanggi.domain.gameRecord.entity.GameRecord;
 import com.rangjin.twelvejanggi.domain.game.model.player.PlayerType;
-import com.rangjin.twelvejanggi.domain.orderRecord.controller.response.OrderRecordResponseDto;
+import com.rangjin.twelvejanggi.domain.orderRecord.dto.response.OrderRecordResponseDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

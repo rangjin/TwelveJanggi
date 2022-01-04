@@ -1,6 +1,6 @@
 spring:
   freemarker:
-    template-loader-path: /templates
+    template-loader-path: classpath:/templates
     suffix: .ftl
   h2:
     console:
@@ -14,3 +14,16 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update
+
+social:
+  kakao:
+    client_id: ec3d4717b58836334895e625f5278763
+    redirect: /oauth/kakao/redirect
+    url:
+      login: https://kauth.kakao.com/oauth/authorize
+      token: https://kauth.kakao.com/oauth/token
+      profile: https://kapi.kakao.com/v2/user/me
+      unlink: https://kapi.kakao.com/v1/user/unlink
+
+url:
+  base: http://localhost:8080

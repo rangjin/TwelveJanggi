@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/game")
+@RequestMapping("/api/v1/game")
 public class GameApiController {
 
     private final GameService gameService;

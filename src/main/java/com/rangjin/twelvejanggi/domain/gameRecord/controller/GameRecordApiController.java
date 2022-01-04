@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/gameRecord")
+@RequestMapping("/api/v1/gameRecord")
 public class GameRecordApiController {
 
     private final GameRecordService gameRecordService;

@@ -1,4 +1,4 @@
-package com.rangjin.twelvejanggi.domain.orderRecord.controller.response;
+package com.rangjin.twelvejanggi.domain.orderRecord.dto.response;
 
 import com.rangjin.twelvejanggi.domain.orderRecord.entity.OrderRecord;
 import com.rangjin.twelvejanggi.domain.game.model.piece.PieceType;
