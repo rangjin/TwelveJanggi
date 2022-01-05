@@ -37,4 +37,12 @@ public class UserController {
         return mav;
     }
 
+    @GetMapping("/kakao/redirect")
+    public ModelAndView kakaoRedirect(ModelAndView mav) {
+
+        mav.setViewName("social/kakaoRedirect");
+
+        return mav;
+    }
+
 }
