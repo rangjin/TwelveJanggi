@@ -24,6 +24,7 @@ public class OAuth2Attribute {
         throw new RuntimeException();
     }
 
+    // todo: attributeKey -> email vs name
     private static OAuth2Attribute ofKakao(Map<String, Object> attributes) {
         Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
         Map<String, Object> kakaoProfile = (Map<String, Object>) kakaoAccount.get("profile");

@@ -22,6 +22,8 @@ public class UserDto {
 
     private String role;
 
+    private String refreshToken;
+
     private List<GameRecordResponseDto> gameRecordDtoList;
 
     public UserDto(User user) {
@@ -29,6 +31,7 @@ public class UserDto {
         this.name = user.getName();
         this.picture = user.getPicture();
         this.role = user.getRole();
+        this.refreshToken = user.getRefreshToken();
         this.gameRecordDtoList = user.getGameRecordList() == null ? null :
                 user.getGameRecordList().stream().map(GameRecordResponseDto::new).collect(Collectors.toList());
     }

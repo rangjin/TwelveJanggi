@@ -33,15 +33,15 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
         UserDto userDto = userRequestMapper.toDto(oAuth2User);
 
-        userService.saveOrUpdate(userDto);
-
         Token token = tokenService.generateToken(userDto.getEmail(), "User");
+        userDto.setRefreshToken(token.getRefreshToken());
+
+        userService.saveOrUpdate(userDto);
 
         writeTokenResponse(response, token);
     }
 
     public void writeTokenResponse(HttpServletResponse response, Token token) throws IOException {
-        // todo: access_token 을 그대로 넘기는 방식 고려 필요
         response.setContentType("text/html;charset=UTF-8");
         response.addHeader("Auth", token.getToken());
         response.addHeader("Refresh", token.getRefreshToken());

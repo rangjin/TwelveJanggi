@@ -29,6 +29,8 @@ public class User {
 
     private String role;
 
+    private String refreshToken;
+
     @OneToMany
     private List<GameRecord> gameRecordList;
 
@@ -36,6 +38,8 @@ public class User {
         this.email = userDto.getEmail();
         this.name = userDto.getName();
         this.picture = userDto.getPicture();
+        this.refreshToken = userDto.getRefreshToken();
+        this.role = userDto.getRole();
     }
 
 }

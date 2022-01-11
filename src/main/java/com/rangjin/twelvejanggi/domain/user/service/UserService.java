@@ -28,8 +28,8 @@ public class UserService {
                     .email(userDto.getEmail())
                     .name(userDto.getName())
                     .picture(userDto.getPicture())
-                    // todo: [] 제거 필요
                     .role(userDto.getRole())
+                    .refreshToken(userDto.getRefreshToken())
                     .build();
 
         }
