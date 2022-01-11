@@ -1,7 +1,9 @@
 package com.rangjin.twelvejanggi.global.security.configuration;
 
-import com.rangjin.twelvejanggi.global.security.filter.JwtAuthenticationFilter;
-import com.rangjin.twelvejanggi.global.security.provider.JwtTokenProvider;
+import com.rangjin.twelvejanggi.global.security.service.CustomOAuth2UserService;
+import com.rangjin.twelvejanggi.global.security.filter.JwtAuthFilter;
+import com.rangjin.twelvejanggi.global.security.handler.OAuth2SuccessHandler;
+import com.rangjin.twelvejanggi.global.security.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,7 +15,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final JwtTokenProvider jwtTokenProvider;
+    private final TokenService tokenService;
+    private final CustomOAuth2UserService oAuth2UserService;
+    private final OAuth2SuccessHandler successHandler;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -28,7 +32,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                 .antMatchers("/game/**").hasRole("USER")
                                 .anyRequest().permitAll()
                 .and()
-                        .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+                        .addFilterBefore(new JwtAuthFilter(tokenService), UsernamePasswordAuthenticationFilter.class)
+                        .oauth2Login()
+                                .successHandler(successHandler)
+                                .userInfoEndpoint().userService(oAuth2UserService);
+
     }
 
 }

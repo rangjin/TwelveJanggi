@@ -27,8 +27,8 @@ public class GameRecordResponseDto {
 
     public GameRecordResponseDto(GameRecord gameRecord) {
         this.gameId = gameRecord.getGameId();
-        this.white = gameRecord.getWhite().getUsername();
-        this.black = gameRecord.getBlack().getUsername();
+        this.white = gameRecord.getWhite().getName();
+        this.black = gameRecord.getBlack().getName();
         this.winner = gameRecord.getWinner();
         this.orderList = gameRecord.getOrderList().stream().map(OrderRecordResponseDto::new)
                 .collect(Collectors.toList());

@@ -30,10 +30,10 @@ public class GameService {
     public Game create() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        Game game = new Game(new Player(user.getUsername()));
+        Game game = new Game(new Player(user.getName()));
         GameRepository.getInstance().setGame(game);
 
-        log.info("Start Game : {}", user.getUsername());
+        log.info("Start Game : {}", user.getName());
 
         return game;
     }
@@ -49,11 +49,11 @@ public class GameService {
 
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        game.setBlack(new Player(user.getUsername()));
+        game.setBlack(new Player(user.getName()));
         game.setGameStatus(GameStatus.IN_PROGRESS);
         GameRepository.getInstance().setGame(game);
 
-        log.info("Connect Game : {}, {}", gameId, user.getUsername());
+        log.info("Connect Game : {}, {}", gameId, user.getName());
 
         return game;
     }

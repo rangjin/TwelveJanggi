@@ -23,9 +23,9 @@ public class GameRecordService {
 
     public void saveGame(Game game) {
         // 종료된 게임 저장
-        User white = userRepository.findByUsername(game.getWhite().getName())
+        User white = userRepository.findByName(game.getWhite().getName())
                 .orElseThrow(PlayerNotFoundException::new);
-        User black = userRepository.findByUsername(game.getBlack().getName())
+        User black = userRepository.findByName(game.getBlack().getName())
                 .orElseThrow(PlayerNotFoundException::new);
 
         GameRecord gameRecord = new GameRecord(game, white, black);
