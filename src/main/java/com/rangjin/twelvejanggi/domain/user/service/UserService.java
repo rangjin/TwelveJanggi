@@ -7,6 +7,7 @@ import com.rangjin.twelvejanggi.global.exception.PlayerNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -17,11 +18,11 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public void saveOrUpdate(UserDto userDto) {
-        Optional<User> exist = userRepository.findByEmail(userDto.getEmail());
+    public Long saveOrUpdate(UserDto userDto) {
+        Optional<User> optionalUser = userRepository.findByEmail(userDto.getEmail());
         User user;
-        if (exist.isPresent()) {
-            user = exist.get();
+        if (optionalUser.isPresent()) {
+            user = optionalUser.get();
             user.update(userDto);
         } else {
             user = User.builder()
@@ -33,11 +34,24 @@ public class UserService {
                     .build();
 
         }
-        userRepository.save(user);
+
+        return userRepository.save(user).getId();
     }
 
-    public UserDto findByEmail(String email) {
-        return new UserDto(userRepository.findByEmail(email).orElseThrow(PlayerNotFoundException::new));
+    public void setRefreshToken(Long id, String refreshToken) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setRefreshToken(refreshToken);
+            userRepository.save(user);
+        } else {
+            throw new PlayerNotFoundException();
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public User loadUser(Long id) {
+        return userRepository.findById(id).orElseThrow(PlayerNotFoundException::new);
     }
 
 }

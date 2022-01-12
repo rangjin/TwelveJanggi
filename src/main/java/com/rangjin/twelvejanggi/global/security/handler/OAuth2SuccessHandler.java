@@ -33,10 +33,11 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
         UserDto userDto = userRequestMapper.toDto(oAuth2User);
 
-        Token token = tokenService.generateToken(userDto.getEmail(), "User");
-        userDto.setRefreshToken(token.getRefreshToken());
+        Long id = userService.saveOrUpdate(userDto);
 
-        userService.saveOrUpdate(userDto);
+        Token token = tokenService.generateToken(id, "User");
+
+        userService.setRefreshToken(id, token.getRefreshToken());
 
         writeTokenResponse(response, token);
     }

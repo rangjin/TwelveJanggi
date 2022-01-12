@@ -1,6 +1,7 @@
 package com.rangjin.twelvejanggi.global.security.service;
 
 import com.rangjin.twelvejanggi.domain.user.controller.response.UserDto;
+import com.rangjin.twelvejanggi.domain.user.entity.User;
 import com.rangjin.twelvejanggi.domain.user.service.UserService;
 import com.rangjin.twelvejanggi.global.security.dto.Token;
 import io.jsonwebtoken.Claims;
@@ -31,11 +32,11 @@ public class TokenService {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public Token generateToken(String uid, String role) {
+    public Token generateToken(Long id, String role) {
         long tokenPeriod = 1000L * 60L * 10L;
         long refreshPeriod = 1000L * 60L * 60L * 24L * 30L * 30L;
 
-        Claims claims = Jwts.claims().setSubject(uid);
+        Claims claims = Jwts.claims().setSubject(String.valueOf(id));
         claims.put("role", role);
 
         Date now = new Date();
@@ -72,9 +73,10 @@ public class TokenService {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 
-    public Authentication getAuthentication(String email) {
-        UserDto userDto = userService.findByEmail(email);
-        return new UsernamePasswordAuthenticationToken(userDto, "", List.of(new SimpleGrantedAuthority(userDto.getRole())));
+    public Authentication getAuthentication(Long id) {
+        User user = userService.loadUser(id);
+
+        return new UsernamePasswordAuthenticationToken(user, "", List.of(new SimpleGrantedAuthority(user.getRole())));
     }
 
 }

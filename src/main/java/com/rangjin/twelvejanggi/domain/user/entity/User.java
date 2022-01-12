@@ -38,8 +38,11 @@ public class User {
         this.email = userDto.getEmail();
         this.name = userDto.getName();
         this.picture = userDto.getPicture();
-        this.refreshToken = userDto.getRefreshToken();
         this.role = userDto.getRole();
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 
 }

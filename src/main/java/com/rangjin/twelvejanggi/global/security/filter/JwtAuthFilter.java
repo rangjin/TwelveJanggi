@@ -23,15 +23,13 @@ public class JwtAuthFilter extends GenericFilterBean {
         String token = ((HttpServletRequest) request).getHeader("Auth");
 
         if (token != null && tokenService.verifyToken(token)) {
-            String email = tokenService.getUid(token);
+            Long id = Long.parseLong(tokenService.getUid(token));
 
-            Authentication auth = tokenService.getAuthentication(email);
+            Authentication auth = tokenService.getAuthentication(id);
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
 
         chain.doFilter(request, response);
     }
-
-
 
 }
